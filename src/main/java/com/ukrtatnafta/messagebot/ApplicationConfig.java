@@ -6,9 +6,9 @@ import com.ukrtatnafta.messagebot.viberbot.ViberBot;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.jms.annotation.EnableJms;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
@@ -44,6 +44,8 @@ public class ApplicationConfig {
     public ViberBot viberBot(){
         ViberBot viberBot = new ViberBot();
 
+        viberBot.setUrl("https://3a3c32a3.ngrok.io/crm/hook");
+        viberBot.setUrlApi("https://chatapi.viber.com/pa/");
         return viberBot;
     }
     @Bean
