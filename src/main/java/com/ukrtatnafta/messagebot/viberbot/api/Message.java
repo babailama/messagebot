@@ -1,9 +1,7 @@
 package com.ukrtatnafta.messagebot.viberbot.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ukrtatnafta.messagebot.viberbot.api.data.MessageBotDataObjectInterface;
-import com.ukrtatnafta.messagebot.viberbot.enums.MessageTypeEnum;
 
 /**
  * Created by ivanov-av on 23.11.2017.
@@ -55,5 +53,10 @@ public class Message implements MessageBotDataObjectInterface{
 
     public void setMinApiVersion(Long minApiVersion) {
         this.minApiVersion = minApiVersion;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append("Message{").append("receiver='").append(receiver).append('\'').append(", type='").append(type).append('\'').append(", sender=").append(sender).append(", trackingData='").append(trackingData).append('\'').append(", minApiVersion=").append(minApiVersion).append('}').toString();
     }
 }

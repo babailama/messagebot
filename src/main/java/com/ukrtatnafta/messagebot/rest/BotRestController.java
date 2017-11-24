@@ -2,14 +2,20 @@ package com.ukrtatnafta.messagebot.rest;
 
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
 import com.ukrtatnafta.messagebot.viberbot.api.data.AccountInfo;
+import com.ukrtatnafta.messagebot.viberbot.api.message.Location;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Text;
+import com.ukrtatnafta.messagebot.viberbot.api.reguest.OnlineRequest;
+import com.ukrtatnafta.messagebot.viberbot.api.reguest.UserDetailsRequest;
 import com.ukrtatnafta.messagebot.viberbot.enums.ViberApiMethodEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -20,13 +26,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class BotRestController {
     private static final String template = "Hello, %s!";
+    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.BotRestController.class);
     private final AtomicLong counter = new AtomicLong();
     @Autowired
     private ViberBot viberBot;
     @Autowired
     private RestTemplate restTemplate;
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.BotRestController.class);
-
 
     @RequestMapping(value = "/account_info", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity accountInfo() {
@@ -38,5 +43,22 @@ public class BotRestController {
     public ResponseEntity sendTextMessage(@RequestBody Text message) {
         log.info("sending text message for " + message.getReceiver());
         return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
+    }
+
+    @RequestMapping(value = "/send_location", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity sendTextMessage(@RequestBody Location message) {
+        log.info("sending text message for " + message.getReceiver());
+        log.info(message.toString());
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
+    }
+
+    @RequestMapping(value = "/get_user_details", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity getUserDetails(@RequestBody UserDetailsRequest request) {
+        return viberBot.callApiMethod(ViberApiMethodEnum.GET_USER_DETAILS, request, restTemplate);
+    }
+
+    @RequestMapping(value = "/get_online", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity getUserDetails(@RequestBody OnlineRequest request) {
+        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ONLINE, request, restTemplate);
     }
 }

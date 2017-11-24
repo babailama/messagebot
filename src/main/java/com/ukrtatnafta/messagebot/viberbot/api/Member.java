@@ -3,16 +3,17 @@ package com.ukrtatnafta.messagebot.viberbot.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Created by ivanov-av on 23.11.2017.
+ * Created by Администратор on 24.11.2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Sender {
+public class Member {
     private String id;
-    private String name;
-    private String avatar;
 
-    public Sender() {
-    }
+    private String name;
+
+    private String role;
+
+    private String avatar;
 
     public String getId() {
         return id;
@@ -30,6 +31,14 @@ public class Sender {
         this.name = name;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -40,6 +49,6 @@ public class Sender {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("Sender{").append("id='").append(id).append('\'').append(", name='").append(name).append('\'').append(", avatar='").append(avatar).append('\'').append('}').toString();
+        return new StringBuilder().append("Member{").append("id='").append(id).append('\'').append(", name='").append(name).append('\'').append(", role='").append(role).append('\'').append(", avatar='").append(avatar).append('\'').append('}').toString();
     }
 }
