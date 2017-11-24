@@ -17,7 +17,7 @@ import static com.ukrtatnafta.messagebot.ApplicationConfig.VIBER_QUEUE;
  */
 @Component
 public class Consumer {
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.Application.class);
+    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.queue.Consumer.class);
 
     @JmsListener(destination = VIBER_QUEUE)
     public void receiveMessage(@Payload String jsonString, @Headers MessageHeaders headers,

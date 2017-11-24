@@ -25,7 +25,7 @@ public class BotRestController {
     private ViberBot viberBot;
     @Autowired
     private RestTemplate restTemplate;
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.Application.class);
+    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.BotRestController.class);
 
 
     @RequestMapping(value = "/account_info", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)

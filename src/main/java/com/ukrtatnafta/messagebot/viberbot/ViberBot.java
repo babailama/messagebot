@@ -26,7 +26,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
     private String token;
     private String url;
     private String urlApi;
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.Application.class);
+    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.viberbot.ViberBot.class);
 
     @Autowired
     ObjectMapper objectMapper;

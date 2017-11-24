@@ -11,7 +11,7 @@ import static com.ukrtatnafta.messagebot.ApplicationConfig.VIBER_QUEUE;
  */
 @Service
 public class Producer {
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.Application.class);
+    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.queue.Producer.class);
 
     @Autowired
     private JmsTemplate jmsTemplate;
