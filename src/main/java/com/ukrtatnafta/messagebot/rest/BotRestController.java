@@ -4,6 +4,7 @@ import com.ukrtatnafta.messagebot.viberbot.ViberBot;
 import com.ukrtatnafta.messagebot.viberbot.api.data.AccountInfo;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Location;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Text;
+import com.ukrtatnafta.messagebot.viberbot.api.message.Url;
 import com.ukrtatnafta.messagebot.viberbot.api.reguest.OnlineRequest;
 import com.ukrtatnafta.messagebot.viberbot.api.reguest.UserDetailsRequest;
 import com.ukrtatnafta.messagebot.viberbot.enums.ViberApiMethodEnum;
@@ -45,6 +46,12 @@ public class BotRestController {
         return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
     }
 
+    @RequestMapping(value = "/send_url", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity sendTextMessage(@RequestBody Url message) {
+        log.info("sending text message for " + message.getReceiver());
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
+    }
+
     @RequestMapping(value = "/send_location", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity sendTextMessage(@RequestBody Location message) {
         log.info("sending text message for " + message.getReceiver());
@@ -59,6 +66,11 @@ public class BotRestController {
 
     @RequestMapping(value = "/get_online", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity getUserDetails(@RequestBody OnlineRequest request) {
+        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ONLINE, request, restTemplate);
+    }
+
+    @RequestMapping(value = "/set_webhook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity setWebHook(@RequestBody OnlineRequest request) {
         return viberBot.callApiMethod(ViberApiMethodEnum.GET_ONLINE, request, restTemplate);
     }
 }
