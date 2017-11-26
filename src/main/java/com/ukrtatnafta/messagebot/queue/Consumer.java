@@ -3,11 +3,11 @@ package com.ukrtatnafta.messagebot.queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import org.springframework.messaging.Message;
 
 import javax.jms.Session;
 
@@ -22,6 +22,10 @@ public class Consumer {
     @JmsListener(destination = VIBER_QUEUE)
     public void receiveMessage(@Payload String jsonString, @Headers MessageHeaders headers,
                                Message message, Session session) {
+        /*
+        TODO
+        conversation with bot
+        */
         log.info("received <" + jsonString + ">");
 
         log.info("- - - - - - - - - - - - - - - - - - - - - - - -");

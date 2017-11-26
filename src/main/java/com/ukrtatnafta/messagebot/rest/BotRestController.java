@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @RestController
 public class BotRestController {
-    private static final String template = "Hello, %s!";
     private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.BotRestController.class);
     private final AtomicLong counter = new AtomicLong();
     @Autowired

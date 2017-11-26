@@ -2,6 +2,8 @@ package com.ukrtatnafta.messagebot.viberbot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ukrtatnafta.messagebot.queue.Consumer;
+import com.ukrtatnafta.messagebot.queue.Producer;
 import com.ukrtatnafta.messagebot.viberbot.api.MessageBotCallApiMethodInterface;
 import com.ukrtatnafta.messagebot.viberbot.api.Status;
 import com.ukrtatnafta.messagebot.viberbot.api.WebHookStatus;
@@ -24,7 +26,12 @@ import java.io.IOException;
 public class ViberBot implements MessageBotCallApiMethodInterface {
     private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.viberbot.ViberBot.class);
     @Autowired
+    private
     ObjectMapper objectMapper;
+    @Autowired
+    private Producer producer;
+    @Autowired
+    private Consumer consumer;
     private String token;
     private String url;
     private String urlApi;
@@ -62,7 +69,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
             httpHeaders.add("Content-Type", "application/json");
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonString, httpHeaders);
             ResponseEntity<String> responseEntity = restTemplate.exchange(this.getUrlApi() + method.getMethodName(), HttpMethod.POST, httpEntity, String.class);
-            Status status = objectMapper.readValue(responseEntity.getBody().toString(), Status.class);
+            Status status = objectMapper.readValue(responseEntity.getBody(), Status.class);
             log.info(status.toString());
             return responseEntity;
         } catch (JsonProcessingException e) {
@@ -80,6 +87,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
             httpHeaders.add("Content-Type", "application/json");
             WebHookStatus webHookStatus = new WebHookStatus("0", "200");
             HttpEntity<String> httpEntity = new HttpEntity(webHookStatus, httpHeaders);
+            producer.send(request);
             log.info(request);
             return new ResponseEntity<String>(objectMapper.writeValueAsString(webHookStatus), httpHeaders, HttpStatus.OK);
         } catch (JsonProcessingException e) {
