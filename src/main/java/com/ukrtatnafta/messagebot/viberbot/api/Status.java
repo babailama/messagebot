@@ -1,13 +1,17 @@
 package com.ukrtatnafta.messagebot.viberbot.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ukrtatnafta.messagebot.viberbot.enums.ViberEventEnum;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Администратор on 24.11.2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Status {
 
     private String icon;
@@ -26,7 +30,7 @@ public class Status {
 
     private String category;
 
-    private String[] eventTypes;
+    private List<ViberEventEnum> eventTypes;
 
     private String subcategory;
 
@@ -115,12 +119,12 @@ public class Status {
         this.category = category;
     }
 
-    public String[] getEventTypes() {
-        return eventTypes;
+    public List<String> getEventTypes() {
+        return eventTypes.stream().map(ViberEventEnum::getName).collect(Collectors.toList());
     }
 
-    public void setEventTypes(String[] event_types) {
-        this.eventTypes = event_types;
+    public void setEventTypes(List<String> eventTypes) {
+        this.eventTypes = eventTypes.stream().map(ViberEventEnum::get).collect(Collectors.toList());
     }
 
     public String getSubcategory() {
@@ -173,15 +177,24 @@ public class Status {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("Status{").append("icon='").append(icon).append('\'').append(", status='")
-                .append(status).append('\'').append(", location=").append(location).append(", status_message='")
-                .append(statusMessage).append('\'').append(", uri='").append(uri).append('\'').append(", country='")
-                .append(country).append('\'').append(", id='").append(id).append('\'').append(", category='")
-                .append(category).append('\'').append(", event_types=").append(Arrays.toString(eventTypes))
-                .append(", subcategory='").append(subcategory).append('\'').append(", name='").append(name)
-                .append('\'').append(", background='").append(background).append('\'').append(", webhook='")
-                .append(webhook).append('\'').append(", subscribers_count='").append(subscribersCount)
-                .append('\'').append(", members=").append(Arrays.toString(members)).append('}')
-                .append(", messageToken=").append(messageToken).append('}').toString();
+        final StringBuilder sb = new StringBuilder("Status{");
+        sb.append("icon='").append(icon).append('\'');
+        sb.append(", status='").append(status).append('\'');
+        sb.append(", location=").append(location);
+        sb.append(", statusMessage='").append(statusMessage).append('\'');
+        sb.append(", uri='").append(uri).append('\'');
+        sb.append(", country='").append(country).append('\'');
+        sb.append(", id='").append(id).append('\'');
+        sb.append(", category='").append(category).append('\'');
+        sb.append(", eventTypes=").append(eventTypes);
+        sb.append(", subcategory='").append(subcategory).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", background='").append(background).append('\'');
+        sb.append(", webhook='").append(webhook).append('\'');
+        sb.append(", subscribersCount='").append(subscribersCount).append('\'');
+        sb.append(", members=").append(Arrays.toString(members));
+        sb.append(", messageToken='").append(messageToken).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

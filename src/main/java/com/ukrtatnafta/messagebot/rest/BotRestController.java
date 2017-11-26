@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -30,47 +29,45 @@ public class BotRestController {
     private final AtomicLong counter = new AtomicLong();
     @Autowired
     private ViberBot viberBot;
-    @Autowired
-    private RestTemplate restTemplate;
 
     @RequestMapping(value = "/account_info", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity accountInfo() {
         log.info("get account info for "+viberBot.getToken());
-        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ACCOUNT_INFO, new AccountInfo(), restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ACCOUNT_INFO, new AccountInfo());
     }
 
     @RequestMapping(value = "/send_text_message", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity sendTextMessage(@RequestBody Text message) {
         log.info("sending text message for " + message.getReceiver());
-        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
     }
 
     @RequestMapping(value = "/send_url", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity sendTextMessage(@RequestBody Url message) {
         log.info("sending text message for " + message.getReceiver());
-        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
     }
 
     @RequestMapping(value = "/send_location", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity sendTextMessage(@RequestBody Location message) {
         log.info("sending text message for " + message.getReceiver());
         log.info(message.toString());
-        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
     }
 
     @RequestMapping(value = "/get_user_details", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity getUserDetails(@RequestBody UserDetailsRequest request) {
-        return viberBot.callApiMethod(ViberApiMethodEnum.GET_USER_DETAILS, request, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.GET_USER_DETAILS, request);
     }
 
     @RequestMapping(value = "/get_online", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity getUserDetails(@RequestBody OnlineRequest request) {
-        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ONLINE, request, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ONLINE, request);
     }
 
     @RequestMapping(value = "/set_webhook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity setWebHook(@RequestBody OnlineRequest request) {
-        return viberBot.callApiMethod(ViberApiMethodEnum.SET_WEBHOOK, request, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.SET_WEBHOOK, request);
     }
 
     @RequestMapping(value = "/hook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)

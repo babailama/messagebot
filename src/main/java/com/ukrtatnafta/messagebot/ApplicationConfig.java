@@ -47,7 +47,7 @@ public class ApplicationConfig {
         ViberBotConfig viberBotConfig = new ViberBotConfig();
         viberBotConfig.setUrl("https://3a3c32a3.ngrok.io/crm/hook");
         viberBotConfig.setUrlApi("https://chatapi.viber.com/pa/");
-        viberBotConfig.setToken("token here");
+        viberBotConfig.setToken("");
         return viberBotConfig;
     }
     @Bean

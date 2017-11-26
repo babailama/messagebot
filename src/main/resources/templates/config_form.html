@@ -57,7 +57,7 @@
             <label class="control-label" for="">Event types</label>
             <th:block th:each="event : ${allViberEventEnums}">
                 <label class="checkbox" th:text="${event}"/>
-                <input type="checkbox" name="eventEnums" th:value="${event}" th:field="${viberBotConfig.eventEnums}"/>
+                <input type="checkbox" th:value="${event}" th:field="${viberBotConfig.eventEnums}"/>
             </th:block>
         </div>
 
@@ -70,5 +70,11 @@
         </div>
     </fieldset>
 </form>
+<div class="container">
+    <h1>Viber bot status</h1>
+    <p th:text="${status}">
+    </p>
+</div>
+
 </body>
 </html>

@@ -35,7 +35,8 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
     private Consumer consumer;
     @Autowired
     private ViberBotConfig viberBotConfig;
-
+    @Autowired
+    private RestTemplate restTemplate;
     private String token;
     private String url;
     private String urlApi;
@@ -65,7 +66,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
     }
 
     @Override
-    public ResponseEntity callApiMethod(ViberApiMethodEnum method, MessageBotDataObjectInterface data, RestTemplate restTemplate) {
+    public ResponseEntity callApiMethod(ViberApiMethodEnum method, MessageBotDataObjectInterface data) {
         try {
             String jsonString = objectMapper.writeValueAsString(data);
             HttpHeaders httpHeaders = new HttpHeaders();
