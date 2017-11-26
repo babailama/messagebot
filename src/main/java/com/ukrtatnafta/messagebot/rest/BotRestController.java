@@ -71,6 +71,11 @@ public class BotRestController {
 
     @RequestMapping(value = "/set_webhook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity setWebHook(@RequestBody OnlineRequest request) {
-        return viberBot.callApiMethod(ViberApiMethodEnum.GET_ONLINE, request, restTemplate);
+        return viberBot.callApiMethod(ViberApiMethodEnum.SET_WEBHOOK, request, restTemplate);
+    }
+
+    @RequestMapping(value = "/hook", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity webHook(@RequestBody String request) {
+        return viberBot.webHook(request);
     }
 }
