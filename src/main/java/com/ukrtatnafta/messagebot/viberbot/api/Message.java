@@ -2,6 +2,7 @@ package com.ukrtatnafta.messagebot.viberbot.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ukrtatnafta.messagebot.viberbot.api.data.MessageBotDataObjectInterface;
+import com.ukrtatnafta.messagebot.viberbot.enums.MessageTypeEnum;
 
 /**
  * Created by ivanov-av on 23.11.2017.
@@ -9,7 +10,7 @@ import com.ukrtatnafta.messagebot.viberbot.api.data.MessageBotDataObjectInterfac
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Message implements MessageBotDataObjectInterface{
     private String receiver;
-    private String type;
+    private MessageTypeEnum type;
     private Sender sender;
     //@JsonProperty("tracking_data")
     private String trackingData;
@@ -24,11 +25,11 @@ public class Message implements MessageBotDataObjectInterface{
     }
 
     public String getType() {
-        return type;
+        return type.getName();
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = MessageTypeEnum.get(type);
     }
 
     public Sender getSender() {

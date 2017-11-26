@@ -6,6 +6,7 @@ import com.ukrtatnafta.messagebot.queue.Consumer;
 import com.ukrtatnafta.messagebot.queue.Producer;
 import com.ukrtatnafta.messagebot.viberbot.api.MessageBotCallApiMethodInterface;
 import com.ukrtatnafta.messagebot.viberbot.api.Status;
+import com.ukrtatnafta.messagebot.viberbot.api.ViberBotConfig;
 import com.ukrtatnafta.messagebot.viberbot.api.WebHookStatus;
 import com.ukrtatnafta.messagebot.viberbot.api.data.MessageBotDataObjectInterface;
 import com.ukrtatnafta.messagebot.viberbot.enums.ViberApiMethodEnum;
@@ -32,32 +33,35 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
     private Producer producer;
     @Autowired
     private Consumer consumer;
+    @Autowired
+    private ViberBotConfig viberBotConfig;
+
     private String token;
     private String url;
     private String urlApi;
 
     public String getUrlApi() {
-        return urlApi;
+        return this.viberBotConfig.getUrlApi();
     }
 
     public void setUrlApi(String urlApi) {
-        this.urlApi = urlApi;
+        this.viberBotConfig.setUrl(urlApi);
     }
 
     public String getToken() {
-        return token;
+        return this.viberBotConfig.getToken();
     }
 
     public void setToken(String token) {
-        this.token = token;
+        this.viberBotConfig.setToken(token);
     }
 
     public String getUrl() {
-        return url;
+        return this.viberBotConfig.getUrl();
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.viberBotConfig.setUrl(url);
     }
 
     @Override

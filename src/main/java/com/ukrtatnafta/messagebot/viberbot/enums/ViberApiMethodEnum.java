@@ -1,5 +1,8 @@
 package com.ukrtatnafta.messagebot.viberbot.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by ivanov-av on 24.11.2017.
  */
@@ -18,6 +21,18 @@ public enum ViberApiMethodEnum {
 
     public String getMethodName() {
         return this.methodName;
+    }
+
+    private static final Map<String, ViberApiMethodEnum> lookup = new HashMap<>();
+
+    static {
+        for (ViberApiMethodEnum v : ViberApiMethodEnum.values()) {
+            lookup.put(v.getMethodName(), v);
+        }
+    }
+
+    public static ViberApiMethodEnum get(String name) {
+        return lookup.get(name);
     }
 
 }

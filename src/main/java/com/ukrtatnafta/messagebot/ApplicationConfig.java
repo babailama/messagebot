@@ -3,6 +3,7 @@ package com.ukrtatnafta.messagebot;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
+import com.ukrtatnafta.messagebot.viberbot.api.ViberBotConfig;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -40,12 +41,18 @@ public class ApplicationConfig {
         converter.setTypeIdPropertyName("_type");
         return converter;
     }
+
+    @Bean
+    public ViberBotConfig viberBotConfig() {
+        ViberBotConfig viberBotConfig = new ViberBotConfig();
+        viberBotConfig.setUrl("https://3a3c32a3.ngrok.io/crm/hook");
+        viberBotConfig.setUrlApi("https://chatapi.viber.com/pa/");
+        viberBotConfig.setToken("token here");
+        return viberBotConfig;
+    }
     @Bean
     public ViberBot viberBot(){
         ViberBot viberBot = new ViberBot();
-
-        viberBot.setUrl("https://3a3c32a3.ngrok.io/crm/hook");
-        viberBot.setUrlApi("https://chatapi.viber.com/pa/");
         return viberBot;
     }
     @Bean

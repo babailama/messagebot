@@ -1,5 +1,8 @@
 package com.ukrtatnafta.messagebot.viberbot.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by ivanov-av on 23.11.2017.
  */
@@ -23,4 +26,17 @@ public enum  MessageTypeEnum {
     public String getName(){
         return name;
     }
+
+    private static final Map<String, MessageTypeEnum> lookup = new HashMap<>();
+
+    static {
+        for (MessageTypeEnum v : MessageTypeEnum.values()) {
+            lookup.put(v.getName(), v);
+        }
+    }
+
+    public static MessageTypeEnum get(String name) {
+        return lookup.get(name);
+    }
+
 }

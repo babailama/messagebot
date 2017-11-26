@@ -2,7 +2,6 @@ package com.ukrtatnafta.messagebot.viberbot.api.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ukrtatnafta.messagebot.viberbot.api.Message;
-import com.ukrtatnafta.messagebot.viberbot.enums.MessageTypeEnum;
 
 /**
  * Created by Администратор on 24.11.2017.
@@ -37,11 +36,6 @@ public class File extends Message {
 
     public void setSize(Long size) {
         this.size = size;
-    }
-
-    @Override
-    public String getType() {
-        return MessageTypeEnum.FILE.getName();
     }
 
     @Override

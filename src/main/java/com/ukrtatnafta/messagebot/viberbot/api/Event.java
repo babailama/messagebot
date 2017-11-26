@@ -1,13 +1,14 @@
 package com.ukrtatnafta.messagebot.viberbot.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ukrtatnafta.messagebot.viberbot.enums.ViberEventEnum;
 
 /**
  * Created by ivanov-av on 23.11.2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
-    private String event;
+    private ViberEventEnum event;
     private Long timestamp;
     private String messageToken;
     private Sender sender;
@@ -15,11 +16,11 @@ public class Event {
     private Message message;
 
     public String getEvent() {
-        return event;
+        return event.getName();
     }
 
     public void setEvent(String event) {
-        this.event = event;
+        this.event = ViberEventEnum.get(event);
     }
 
     public Long getTimestamp() {
