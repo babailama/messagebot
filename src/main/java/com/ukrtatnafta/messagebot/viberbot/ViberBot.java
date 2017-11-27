@@ -37,9 +37,6 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
     private ViberBotConfig viberBotConfig;
     @Autowired
     private RestTemplate restTemplate;
-    private String token;
-    private String url;
-    private String urlApi;
 
     public String getUrlApi() {
         return this.viberBotConfig.getUrlApi();
