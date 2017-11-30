@@ -1,4 +1,4 @@
-package com.ukrtatnafta.messagebot.rest;
+package com.ukrtatnafta.messagebot.web.www;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ViberConfigController {
 
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.ViberConfigController.class);
+    private static final Logger log = LoggerFactory.getLogger(ViberConfigController.class);
     @Autowired
     ViberBotConfig viberBotConfig;
     @Autowired

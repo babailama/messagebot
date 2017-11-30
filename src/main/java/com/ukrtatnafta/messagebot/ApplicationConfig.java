@@ -2,6 +2,8 @@ package com.ukrtatnafta.messagebot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.ukrtatnafta.messagebot.db.MessageBotDataBaseRepository;
+import com.ukrtatnafta.messagebot.db.repository.IMessageBotDataBaseRepository;
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
 import com.ukrtatnafta.messagebot.viberbot.api.ViberBotConfig;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
@@ -74,5 +76,10 @@ public class ApplicationConfig {
         factory.setSessionTimeout(10, TimeUnit.MINUTES);
         //factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
         return factory;
+    }
+
+    @Bean
+    public IMessageBotDataBaseRepository dataBaseRepository() {
+        return new MessageBotDataBaseRepository();
     }
 }

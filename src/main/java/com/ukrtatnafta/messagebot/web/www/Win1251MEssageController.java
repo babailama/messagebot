@@ -1,4 +1,4 @@
-package com.ukrtatnafta.messagebot.rest;
+package com.ukrtatnafta.messagebot.web.www;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 @Controller
 public class Win1251MEssageController {
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.Win1251MEssageController.class);
+    private static final Logger log = LoggerFactory.getLogger(Win1251MEssageController.class);
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired

@@ -2,74 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Viber bot confuguration</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-          crossorigin="anonymous"></link>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-
-<h1>Form</h1>
-<form action="#" th:action="@{/config}" th:object="${viberBotConfig}" method="post" class="form-horizontal">
-    <fieldset>
-        <!-- Text input-->
-        <div class="control-group">
-            <label class="control-label" for="token">viber bot token</label>
-            <div class="col-xs-4">
+<div class="container">
+    <h1>Form</h1>
+    <form action="#" th:action="@{/config}" th:object="${viberBotConfig}" method="post" class="form-horizontal">
+        <fieldset>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="token">viber bot token</label>
                 <input th:field="${viberBotConfig.token}" id="token" name="token" type="text"
-                       placeholder="xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx" class="input-xlarge"/>
+                       placeholder="xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx" class="form-control"/>
                 <p class="help-block">The authentication token (also known as application key) is a unique and secret
                     account identifier.</p>
             </div>
-        </div>
-        <!-- Text input-->
-        <div class="control-group">
-            <label class="control-label" for="web_hook_url">Web hook url</label>
-            <div class="col-xs-4">
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="web_hook_url">Web hook url</label>
                 <input id="web_hook_url" th:field="${viberBotConfig.url}" name="web_hook_url" type="text"
-                       placeholder="https://my.host.com" class="input-xlarge"/>
+                       placeholder="https://my.host.com" class="form-control"/>
                 <p class="help-block">This webhook will be used for receiving callbacks and user messages from
                     Viber.</p>
             </div>
-        </div>
 
-        <!-- Text input-->
-        <div class="control-group">
-            <label class="control-label" for="web_hook_url">Web hook url</label>
-            <div class="col-xs-4">
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="web_hook_url">Web hook url</label>
                 <input id="urlApi" th:field="${viberBotConfig.urlApi}" name="web_hook_url" type="text"
-                       placeholder="https://chatapi.viber.com/pa/" class="input-xlarge"/>
+                       placeholder="https://chatapi.viber.com/pa/" class="form-control"/>
                 <p class="help-block">Viber chat api url.</p>
             </div>
-        </div>
 
-        <!-- Multiple Checkboxes -->
-        <div class="control-group">
-            <label class="control-label" for="">Event types</label>
-            <th:block th:each="event : ${allViberEventEnums}">
-                <label class="checkbox" th:text="${event}"/>
-                <input type="checkbox" th:value="${event}" th:field="${viberBotConfig.eventEnums}"/>
-            </th:block>
-        </div>
-
-        <!-- Button -->
-        <div class="control-group">
-            <label class="control-label" for="submit">Save configuration</label>
-            <div class="controls">
-                <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+            <!-- Multiple Checkboxes -->
+            <div class="form-group">
+                <label class="form-check-label">Event types</label>
+                <th:block th:each="event : ${allViberEventEnums}">
+                    <div class="checkbox">
+                        <!--<label class="checkbox" th:text="${event}"/>-->
+                        <input type="checkbox" th:value="${event}" th:text="${event}"
+                               th:field="${viberBotConfig.eventEnums}"/>
+                    </div>
+                </th:block>
             </div>
-        </div>
-    </fieldset>
-</form>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="submit">Save configuration</label>
+                <div class="controls">
+                    <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
 <div class="container">
     <h1>Viber bot status</h1>
     <p th:text="${status}">

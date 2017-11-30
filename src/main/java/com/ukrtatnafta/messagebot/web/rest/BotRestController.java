@@ -1,6 +1,9 @@
-package com.ukrtatnafta.messagebot.rest;
+package com.ukrtatnafta.messagebot.web.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ukrtatnafta.messagebot.db.repository.IMessageBotCRUDViberUserRepository;
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
+import com.ukrtatnafta.messagebot.viberbot.api.User;
 import com.ukrtatnafta.messagebot.viberbot.api.data.AccountInfo;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Location;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Text;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -25,10 +29,14 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @RestController
 public class BotRestController {
-    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.rest.BotRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.web.rest.BotRestController.class);
     private final AtomicLong counter = new AtomicLong();
     @Autowired
     private ViberBot viberBot;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private IMessageBotCRUDViberUserRepository messageBotCRUDViberUserRepository;
 
     @RequestMapping(value = "/account_info", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity accountInfo() {
@@ -57,7 +65,16 @@ public class BotRestController {
 
     @RequestMapping(value = "/get_user_details", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity getUserDetails(@RequestBody UserDetailsRequest request) {
-        return viberBot.callApiMethod(ViberApiMethodEnum.GET_USER_DETAILS, request);
+        ResponseEntity responseEntity = viberBot.callApiMethod(ViberApiMethodEnum.GET_USER_DETAILS, request);
+        User user;
+        try {
+            user = objectMapper.readValue(responseEntity.getBody().toString(), User.class);
+            messageBotCRUDViberUserRepository.save(user);
+        } catch (IOException e) {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+        return responseEntity;
     }
 
     @RequestMapping(value = "/get_online", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)

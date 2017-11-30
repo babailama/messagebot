@@ -1,28 +1,53 @@
 package com.ukrtatnafta.messagebot.viberbot.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ukrtatnafta.messagebot.db.domain.ViberGroup;
+
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by ivanov-av on 23.11.2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@Table(name = "viber_user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @JsonIgnore
+    private int numeric_id;
+    @JsonIgnore
+    @Column(name = "utn_user")
+    private String utnUserName;
+    @Column(name = "viber_id")
     private String id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "avatar")
     private String avatar;
+    @Column(name = "country")
     private String country;
+    @Column(name = "language")
     private String language;
-    //@JsonProperty("device_type")
+    @Column(name = "device_type")
     private String deviceType;
-    //@JsonProperty("primary_device_os")
+    @Column(name = "primary_device_os")
     private String primaryDeviceOs;
-    //@JsonProperty("api_version")
+    @Column(name = "api_version")
     private Long apiVersion;
-    //@JsonProperty("viber_version")
+    @Column(name = "viber_version")
     private String viberVersion;
+    @Column(name = "mcc")
     private Long mcc;
+    @Column(name = "mnc")
     private Long mnc;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "viber_user_group", joinColumns = @JoinColumn(name = "utn_user_id"), inverseJoinColumns = @JoinColumn(name = "viber_group_id"))
+    private Set<ViberGroup> groups;
 
     public User() {
     }
@@ -44,6 +69,22 @@ public class User {
         sb.append("Mobile network code:" + getMnc() + "\n");
         sb.append("*****************************");
         return sb.toString();
+    }
+
+    public int getNumeric_id() {
+        return numeric_id;
+    }
+
+    public void setNumeric_id(int numeric_id) {
+        this.numeric_id = numeric_id;
+    }
+
+    public String getUtnUserName() {
+        return utnUserName;
+    }
+
+    public void setUtnUserName(String utnUserName) {
+        this.utnUserName = utnUserName;
     }
 
     public String getId() {
