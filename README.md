@@ -1,2 +1,2 @@
 # messagebot
-viber bot with blackjakc and hookers
+viber bot with blackjack and hookers
