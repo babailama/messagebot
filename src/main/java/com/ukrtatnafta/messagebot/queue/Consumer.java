@@ -1,7 +1,10 @@
 package com.ukrtatnafta.messagebot.queue;
 
+import com.ukrtatnafta.messagebot.db.domain.LogRecord;
+import com.ukrtatnafta.messagebot.db.repository.IMessageBotCRUDLogRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
@@ -18,6 +21,8 @@ import static com.ukrtatnafta.messagebot.ApplicationConfig.VIBER_QUEUE;
 @Component
 public class Consumer {
     private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.queue.Consumer.class);
+    @Autowired
+    IMessageBotCRUDLogRecordRepository messageBotCRUDLogRecordRepository;
 
     @JmsListener(destination = VIBER_QUEUE)
     public void receiveMessage(@Payload String jsonString, @Headers MessageHeaders headers,
@@ -26,6 +31,10 @@ public class Consumer {
         TODO
         conversation with bot
         */
+
+        LogRecord record = new LogRecord("Consumer", jsonString);
+        messageBotCRUDLogRecordRepository.save(record);
+
         log.info("received <" + jsonString + ">");
 
         log.info("- - - - - - - - - - - - - - - - - - - - - - - -");

@@ -31,32 +31,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        //auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
         auth.authenticationProvider(authProvider);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.
-                authorizeRequests()
+        http
+                .authorizeRequests()
+                .antMatchers("/send_text_message", "/send_url", "/send_location",
+                        "/win2151message", "/hook", "/set_webhook",
+                        "/get_online", "/get_user_details").permitAll()
                 .antMatchers("/config").hasAuthority("ADMIN")
-                .antMatchers("/**").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/access-denied");
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().logout().permitAll()
+                .and().exceptionHandling().accessDeniedPage("/access-denied");
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**", "/static/**",
+                        "/css/**", "/js/**", "/images/**");
     }
 }

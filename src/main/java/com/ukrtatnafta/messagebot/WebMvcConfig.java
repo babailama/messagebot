@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 
 /**
  * Created by ivanov-av on 29.11.2017.
@@ -35,6 +37,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
+
+
 /*    @Bean UserDetailsService userDetailsService(){
         return userDetailsService;
     }*/
@@ -45,5 +49,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+
+    @Bean
+    public AnonymousAuthenticationFilter anonymousAuthFilter() {
+        AnonymousAuthenticationFilter anonymousAuthenticationFilter = new AnonymousAuthenticationFilter("foobar");
+        return anonymousAuthenticationFilter;
     }
 }

@@ -73,6 +73,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
             ResponseEntity<String> responseEntity = restTemplate.exchange(this.getUrlApi() + method.getMethodName(), HttpMethod.POST, httpEntity, String.class);
             Status status = objectMapper.readValue(responseEntity.getBody(), Status.class);
             log.info(status.toString());
+            producer.send(responseEntity.getBody());
             return responseEntity;
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());

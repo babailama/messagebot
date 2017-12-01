@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by ivanov-av on 23.11.2017.
  */
 @RestController
+//@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
 public class BotRestController {
     private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.web.rest.BotRestController.class);
     private final AtomicLong counter = new AtomicLong();
@@ -65,6 +66,7 @@ public class BotRestController {
 
     @RequestMapping(value = "/get_user_details", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity getUserDetails(@RequestBody UserDetailsRequest request) {
+        log.info("'/get_user_details' requested");
         ResponseEntity responseEntity = viberBot.callApiMethod(ViberApiMethodEnum.GET_USER_DETAILS, request);
         User user;
         try {
