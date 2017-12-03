@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
@@ -53,7 +54,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public AnonymousAuthenticationFilter anonymousAuthFilter() {
-        AnonymousAuthenticationFilter anonymousAuthenticationFilter = new AnonymousAuthenticationFilter("foobar");
+        AnonymousAuthenticationFilter anonymousAuthenticationFilter = new AnonymousAuthenticationFilter("message_bot_anonymous");
         return anonymousAuthenticationFilter;
+    }
+
+    @Bean
+    public AnonymousAuthenticationProvider anonymousAuthenticationProvider() {
+        return new AnonymousAuthenticationProvider("message_bot_anonymous");
     }
 }
