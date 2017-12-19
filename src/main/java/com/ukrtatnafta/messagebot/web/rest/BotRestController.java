@@ -5,6 +5,7 @@ import com.ukrtatnafta.messagebot.db.repository.IMessageBotCRUDViberUserReposito
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
 import com.ukrtatnafta.messagebot.viberbot.api.User;
 import com.ukrtatnafta.messagebot.viberbot.api.data.AccountInfo;
+import com.ukrtatnafta.messagebot.viberbot.api.message.Keyboard;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Location;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Text;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Url;
@@ -44,6 +45,14 @@ public class BotRestController {
         log.info("get account info for "+viberBot.getToken());
         return viberBot.callApiMethod(ViberApiMethodEnum.GET_ACCOUNT_INFO, new AccountInfo());
     }
+
+    @RequestMapping(value = "/send_keyboard", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity sendKeyboard(@RequestBody Keyboard message) {
+        log.info("sending keyboard for " + message.getReceiver());
+        log.info("keyboard: " + message.toString());
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
+    }
+
 
     @RequestMapping(value = "/send_text_message", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity sendTextMessage(@RequestBody Text message) {
