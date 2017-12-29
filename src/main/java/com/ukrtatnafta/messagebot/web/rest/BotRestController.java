@@ -3,6 +3,7 @@ package com.ukrtatnafta.messagebot.web.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ukrtatnafta.messagebot.db.repository.IMessageBotCRUDViberUserRepository;
 import com.ukrtatnafta.messagebot.viberbot.ViberBot;
+import com.ukrtatnafta.messagebot.viberbot.api.Message;
 import com.ukrtatnafta.messagebot.viberbot.api.User;
 import com.ukrtatnafta.messagebot.viberbot.api.data.AccountInfo;
 import com.ukrtatnafta.messagebot.viberbot.api.message.Keyboard;
@@ -53,9 +54,14 @@ public class BotRestController {
         return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
     }
 
-
     @RequestMapping(value = "/send_text_message", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity sendTextMessage(@RequestBody Text message) {
+        log.info("sending text message for " + message.getReceiver());
+        return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
+    }
+
+    @RequestMapping(value = "/send_message", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity sendMessage(@RequestBody Message message) {
         log.info("sending text message for " + message.getReceiver());
         return viberBot.callApiMethod(ViberApiMethodEnum.SEND_MESSAGE, message);
     }

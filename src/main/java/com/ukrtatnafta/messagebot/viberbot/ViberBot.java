@@ -70,6 +70,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
             httpHeaders.add("X-Viber-Auth-Token", this.getToken());
             httpHeaders.add("Content-Type", "application/json");
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonString, httpHeaders);
+            log.info(httpEntity.toString());
             ResponseEntity<String> responseEntity = restTemplate.exchange(this.getUrlApi() + method.getMethodName(), HttpMethod.POST, httpEntity, String.class);
             Status status = objectMapper.readValue(responseEntity.getBody(), Status.class);
             log.info(status.toString());

@@ -1,20 +1,42 @@
 package com.ukrtatnafta.messagebot.viberbot.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ukrtatnafta.messagebot.viberbot.api.data.MessageBotDataObjectInterface;
+import com.ukrtatnafta.messagebot.viberbot.api.message.*;
+import com.ukrtatnafta.messagebot.viberbot.api.message.keyboard.InternalKeyboard;
 import com.ukrtatnafta.messagebot.viberbot.enums.MessageTypeEnum;
 
 /**
  * Created by ivanov-av on 23.11.2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Contact.class, name = "contact"),
+        @JsonSubTypes.Type(value = File.class, name = "file"),
+        @JsonSubTypes.Type(value = Location.class, name = "location"),
+        @JsonSubTypes.Type(value = Sticker.class, name = "sticker"),
+        @JsonSubTypes.Type(value = Text.class, name = "text"),
+        @JsonSubTypes.Type(value = Url.class, name = "url"),
+        @JsonSubTypes.Type(value = Video.class, name = "video")
+})
 public class Message implements MessageBotDataObjectInterface{
     private String receiver;
     private MessageTypeEnum type;
     private Sender sender;
-    //@JsonProperty("tracking_data")
     private String trackingData;
     private Long minApiVersion = 1L;
+    private InternalKeyboard keyboard;
+
+    public InternalKeyboard getKeyboard() {
+        return keyboard;
+    }
+
+    public void setKeyboard(InternalKeyboard keyboard) {
+        this.keyboard = keyboard;
+    }
 
     public String getReceiver() {
         return receiver;

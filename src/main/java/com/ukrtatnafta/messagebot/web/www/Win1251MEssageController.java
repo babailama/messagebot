@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 /**
  * Created by ivanov-av on 27.11.2017.
@@ -28,10 +29,11 @@ public class Win1251MEssageController {
     private ViberBot viberBot;
 
     //"C:\Program Files\cURL\bin\curl" -vk -X POST -H "Content-Type: text/plain;charset=Cp1251" -H "X_UTN_VIBER_TOKEN: 46cb89e2f267d470-205d4f161f03435c-4297d520469042a5" -d "{""receiver_id"":""FtOXrz2Jtzl0sbCRbAQ9Ag=="",   ""message"":""привет мир!""}" http://10.5.9.8:9090/win2151message
-    @PostMapping("/win2151message")
+    @PostMapping("/sendmessage")
     public String win1251MessageHandler(@RequestBody String message) {
         try {
-            Win1251Message win1251Message = objectMapper.readValue(message, Win1251Message.class);
+            String msg = URLDecoder.decode(message, "cp1251");
+            Win1251Message win1251Message = objectMapper.readValue(msg, Win1251Message.class);
             Text textMessage = new Text();
             textMessage.setText(win1251Message.getMessage());
             textMessage.setReceiver(win1251Message.getReceiverId());
