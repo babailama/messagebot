@@ -2,6 +2,8 @@ package com.ukrtatnafta.messagebot.viberbot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ukrtatnafta.messagebot.db.domain.LogRecord;
+import com.ukrtatnafta.messagebot.db.repository.IMessageBotCRUDLogRecordRepository;
 import com.ukrtatnafta.messagebot.queue.Consumer;
 import com.ukrtatnafta.messagebot.queue.Producer;
 import com.ukrtatnafta.messagebot.viberbot.api.MessageBotCallApiMethodInterface;
@@ -26,6 +28,8 @@ import java.io.IOException;
 @Service
 public class ViberBot implements MessageBotCallApiMethodInterface {
     private static final Logger log = LoggerFactory.getLogger(com.ukrtatnafta.messagebot.viberbot.ViberBot.class);
+    @Autowired
+    IMessageBotCRUDLogRecordRepository messageBotCRUDLogRecordRepository;
     @Autowired
     private
     ObjectMapper objectMapper;
@@ -70,7 +74,7 @@ public class ViberBot implements MessageBotCallApiMethodInterface {
             httpHeaders.add("X-Viber-Auth-Token", this.getToken());
             httpHeaders.add("Content-Type", "application/json");
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonString, httpHeaders);
-            log.info(httpEntity.toString());
+            messageBotCRUDLogRecordRepository.save(new LogRecord("Call API method", jsonString));
             ResponseEntity<String> responseEntity = restTemplate.exchange(this.getUrlApi() + method.getMethodName(), HttpMethod.POST, httpEntity, String.class);
             Status status = objectMapper.readValue(responseEntity.getBody(), Status.class);
             log.info(status.toString());
